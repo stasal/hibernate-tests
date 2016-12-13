@@ -12,13 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Workplaces")
 public class Workplace {
-	@Column(name = "Location")
-	public String location;
-
 	@Id
 	@GeneratedValue
 	@Column(name = "Workplace_ID")
 	private Long id;
+
+	@Column(name = "Location")
+	private String location;
 
 	public Workplace() {
 	}

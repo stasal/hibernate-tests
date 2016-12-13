@@ -1,6 +1,5 @@
 package org.hibernate.bugs.entity;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Employees")
-public class Employee implements Serializable {
-	private static final long serialVersionUID = 0L;
-
+public class Employee {
 	@Id
 	@GeneratedValue
 	@Column(name = "Employee_ID")
