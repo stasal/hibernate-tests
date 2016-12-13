@@ -38,7 +38,7 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
 	}
 
 	@Test
-	public void testFromImplicitJoinQueryGeneration() {
+	public void testSQLGenerationForImplicitJoinInSelectClause() {
 		Session session = openSession();
 
 		initTestData( session );
