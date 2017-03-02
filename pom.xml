@@ -15,7 +15,7 @@
 
         <version.com.h2database>1.4.187</version.com.h2database>
         <version.junit>4.12</version.junit>
-        <version.org.hibernate>5.2.5.Final</version.org.hibernate>
+        <version.org.hibernate>5.2.8.Final</version.org.hibernate>
         <version.org.slf4j>1.7.21</version.org.slf4j>
     </properties>
 

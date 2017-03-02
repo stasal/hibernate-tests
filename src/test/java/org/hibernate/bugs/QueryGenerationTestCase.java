@@ -70,6 +70,17 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
 		session.close();
 	}
 
+    @Test
+    public void testRedundantSqlJoins() {
+        Session session = openSession();
+
+        Query query = session.createQuery(
+                "select c.inventoryNumber from Employee e left join Computer c on c.workplace = e.workplace" );
+        query.getResultList();
+
+        session.close();
+    }
+
 	@Override
 	protected Class<?>[] getAnnotatedClasses() {
 		return new Class[] {
