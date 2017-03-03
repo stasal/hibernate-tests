@@ -2,6 +2,7 @@ package org.hibernate.bugs.entity.complex;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author ghoul on 03.03.2017
@@ -52,6 +53,18 @@ public class PotBath {
     @Column(name = "Metal_Height")
     private Long metalHeight;
 
+    @Column(name = "Smelter_ID", insertable = false, updatable = false)
+    private Long smelterId;
+
+    @Column(name = "Room_ID", insertable = false, updatable = false)
+    private Long roomId;
+
+    @Column(name = "Pot_ID", insertable = false, updatable = false)
+    private Long potId;
+
+    @Column(name = "Date_Trunc", insertable = false, updatable = false)
+    private Date date;
+
     public PotDates getPotDates() {
         return potDates;
     }
@@ -66,5 +79,29 @@ public class PotBath {
 
     public void setMetalHeight(Long metalHeight) {
         this.metalHeight = metalHeight;
+    }
+
+    public Long getSmelterId() {
+        return smelterId;
+    }
+
+    public void setSmelterId(Long smelterId) {
+        this.smelterId = smelterId;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    public Long getPotId() {
+        return potId;
+    }
+
+    public void setPotId(Long potId) {
+        this.potId = potId;
     }
 }

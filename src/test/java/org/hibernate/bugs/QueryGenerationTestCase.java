@@ -88,7 +88,17 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
     public void testEntityJoinWorkaround() {
         Session session = openSession();
 
+        // generates correct SQL
         Query query = session.createQuery("select min(pb.metalHeight), pd.pot.room.smelter.name from PotDates pd " +
+                "left join PotBath pb on pb.smelterId = pd.pot.room.smelter.smelterId " +
+                "and pb.roomId = pd.pot.room.roomId and pb.potId = pd.pot.potId " +
+                "and pb.date = pd.date " +
+                "group by pd.pot.room.smelter.name");
+
+        query.list();
+
+        // generates incorrect SQL
+        query = session.createQuery("select min(pb.metalHeight), pd.pot.room.smelter.name from PotDates pd " +
                 "left join PotBath pb on pb.potDates.pot.room.smelter.smelterId = pd.pot.room.smelter.smelterId " +
                 "and pb.potDates.pot.room.roomId = pd.pot.room.roomId and pb.potDates.pot.potId = pd.pot.potId " +
                 "and pb.potDates.date = pd.date " +
