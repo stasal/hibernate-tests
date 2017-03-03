@@ -2,14 +2,15 @@ package org.hibernate.bugs;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.bugs.entity.Computer;
 import org.hibernate.bugs.entity.Employee;
 import org.hibernate.bugs.entity.Person;
 import org.hibernate.bugs.entity.Workplace;
-import org.hibernate.query.Query;
 
+import org.hibernate.bugs.entity.complex.*;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,12 +60,12 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
 
 		Query query = session.createQuery(
 				"select c.inventoryNumber from Employee e left join Computer c on c.workplace.id = e.workplace.id" );
-		List resultList = query.getResultList();
+		List resultList = query.list();
 		Assert.assertThat( resultList.size(), is( 2 ) );
 
 		query = session.createQuery(
 				"select e.person.firstName, c.inventoryNumber from Employee e left join Computer c on c.workplace.id = e.workplace.id" );
-		resultList = query.getResultList();
+		resultList = query.list();
 		Assert.assertThat( resultList.size(), is( 2 ) );
 
 		session.close();
@@ -74,9 +75,11 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
     public void testRedundantSqlJoins() {
         Session session = openSession();
 
-        Query query = session.createQuery(
-                "select c.inventoryNumber from Employee e left join Computer c on c.workplace = e.workplace" );
-        query.getResultList();
+        Query query = session.createQuery("select min(pb.metalHeight), min(ba.cr), pd.pot.room.smelter.name from PotDates pd " +
+                "left join PotBath pb on pb.potDates = pd left join BathAn ba on ba.potDates = pd " +
+                "group by pd.pot.room.smelter.name");
+
+        query.list();
 
         session.close();
     }
@@ -87,7 +90,14 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
 				Person.class,
 				Employee.class,
 				Workplace.class,
-				Computer.class
+				Computer.class,
+
+				Smelter.class,
+				Room.class,
+				Pot.class,
+				PotDates.class,
+				PotBath.class,
+				BathAn.class
 		};
 	}
 }
