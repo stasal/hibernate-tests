@@ -8,6 +8,7 @@ import org.hibernate.bugs.entity.Computer;
 import org.hibernate.bugs.entity.Employee;
 import org.hibernate.bugs.entity.Person;
 import org.hibernate.bugs.entity.Workplace;
+import org.hibernate.bugs.entity.complex.*;
 import org.hibernate.query.Query;
 
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
@@ -78,6 +79,12 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
                 "select c.inventoryNumber from Employee e left join Computer c on c.workplace = e.workplace" );
         query.getResultList();
 
+        query = session.createQuery("select min(pb.metalHeight), pd.pot.room.smelter.name from PotDates pd " +
+                "left join PotBath pb on pb.potDates = pd " +
+                "group by pd.pot.room.smelter.name");
+
+        query.list();
+
         session.close();
     }
 
@@ -87,7 +94,14 @@ public class QueryGenerationTestCase extends BaseCoreFunctionalTestCase {
 				Person.class,
 				Employee.class,
 				Workplace.class,
-				Computer.class
+				Computer.class,
+
+                Smelter.class,
+                Room.class,
+                Pot.class,
+                PotDates.class,
+                PotBath.class,
+                BathAn.class
 		};
 	}
 }
